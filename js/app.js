@@ -185,11 +185,11 @@ function openProjectDetail(id){
     </div>
     <div style="font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:16px">${project.desc}</div>
     ${project.tags.length?`<div class="project-card-tags" style="margin-bottom:16px">${project.tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>`:''}
-    <div class="funding-detail"><h3>Поддержать проект</h3><div class="funding-numbers"><strong>${formatMoney(project.raised||0)}</strong><span>из ${formatMoney(project.goal||50000)}</span><b>${Math.min(100,Math.round((project.raised||0)/(project.goal||50000)*100))}%</b></div><div class="funding-track"><span style="width:${Math.min(100,Math.round((project.raised||0)/(project.goal||50000)*100))}%"></span></div><p>Дедлайн: ${formatDeadline(project.deadline)}</p><div class="donation-row"><input id="donationAmount" type="number" min="1" step="1" value="500" aria-label="Сумма поддержки"><button class="primary" onclick="donateToProject(${project.id})">♡ Поддержать</button><button onclick="openWallet()">Кошелёк</button></div></div>
+    <div class="funding-detail"><h3>Поддержать проект</h3><div class="funding-numbers"><strong>${formatMoney(project.raised||0)}</strong><span>из ${formatMoney(project.goal||50000)}</span><b>${Math.min(100,Math.round((project.raised||0)/(project.goal||50000)*100))}%</b></div><div class="funding-track"><span style="width:${Math.min(100,Math.round((project.raised||0)/(project.goal||50000)*100))}%"></span></div><p>Дедлайн: ${formatDeadline(project.deadline)}</p><div class="donation-row"><input id="donationAmount" type="number" min="1" step="1" value="500" aria-label="Сумма поддержки"><button class="primary" onclick="donateToProject(${project.id})">Поддержать</button><button onclick="openWallet()">Кошелёк</button></div></div>
     <div class="project-detail-actions">
-      <button class="primary" onclick="likeProject(${project.id})">❤ Лайк</button>
-      <button onclick="alert('Ссылка скопирована!')">📤 Поделиться</button>
-      <button onclick="closeProjectDetail();openEditProject(${project.id})">✏ Редактировать</button>
+      <button class="primary" onclick="likeProject(${project.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>Лайк</button>
+      <button onclick="alert('Ссылка скопирована!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>Поделиться</button>
+      <button onclick="closeProjectDetail();openEditProject(${project.id})"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Редактировать</button>
     </div>`;
   document.getElementById('editProjectBtn').onclick=()=>{closeProjectDetail();openEditProject(project.id)};
   document.getElementById('projectDetailModal').style.display='flex';
@@ -279,8 +279,8 @@ function renderCommunities(filter='all'){
       </div>
       <div class="community-card-desc">${c.desc}</div>
       <div class="community-card-footer">
-        <div class="community-card-stat">👥 ${c.members}</div>
-        <button class="btn-join-small" onclick="event.stopPropagation();this.textContent=this.textContent==='Вступить'?'✓ Участник':'Вступить'">Вступить</button>
+        <div class="community-card-stat"> ${c.members}</div>
+        <button class="btn-join-small" onclick="event.stopPropagation();this.textContent=this.textContent==='Вступить'?'<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px;margin-right:4px"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Участник':'Вступить'">Вступить</button>
       </div>
     </div>`).join('');
 }
@@ -339,15 +339,15 @@ function getFileExtension(name) {
 
 function getAssetIcon(type, name) {
   const ext = getFileExtension(name);
-  if ((type || '').startsWith('image/')) return '🖼';
-  if (['zip','rar','7z','tar','gz'].includes(ext)) return '📦';
-  if (['pdf'].includes(ext)) return '📕';
+  if ((type || '').startsWith('image/')) return '';
+  if (['zip','rar','7z','tar','gz'].includes(ext)) return '';
+  if (['pdf'].includes(ext)) return '';
   if (['doc','docx','txt','md','rtf','odt'].includes(ext)) return '';
-  if (['xls','xlsx','csv'].includes(ext)) return '📊';
-  if (['ppt','pptx'].includes(ext)) return '📽';
-  if (['mp4','mov','avi','mkv','webm'].includes(ext)) return '🎬';
-  if (['mp3','wav','ogg','m4a'].includes(ext)) return '🎵';
-  if (['js','ts','html','css','json','py','java','cpp','c','cs','php','rb','go','rs'].includes(ext)) return '💻';
+  if (['xls','xlsx','csv'].includes(ext)) return '';
+  if (['ppt','pptx'].includes(ext)) return '';
+  if (['mp4','mov','avi','mkv','webm'].includes(ext)) return '';
+  if (['mp3','wav','ogg','m4a'].includes(ext)) return '';
+  if (['js','ts','html','css','json','py','java','cpp','c','cs','php','rb','go','rs'].includes(ext)) return '';
   return '';
 }
 
@@ -677,7 +677,7 @@ function showDevelopmentNotice(sectionName){
  const old=document.getElementById('studhub-dev-toast');if(old)old.remove();
  const toast=document.createElement('div');toast.id='studhub-dev-toast';
  toast.style.cssText='position:fixed;right:24px;bottom:24px;z-index:10050;max-width:360px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-lg);font-family:inherit;animation:fadeIn .2s ease';
- toast.innerHTML='<div style="display:flex;gap:12px;align-items:flex-start"><span style="font-size:22px">🛠️</span><div><strong style="display:block;font-size:14px;margin-bottom:5px">Этот раздел сайта еще в разработке</strong><span style="font-size:12px;line-height:1.5;color:var(--text-2)"></span></div><button aria-label="Закрыть" style="border:0;background:transparent;color:var(--text-3);font-size:20px;cursor:pointer;margin-left:8px">×</button></div>';
+ toast.innerHTML='<div style="display:flex;gap:12px;align-items:flex-start"><svg width="20" height="20" viewBox="0 0 24 24" fill="var(--accent)" style="flex-shrink:0;margin-top:1px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><div><strong style="display:block;font-size:14px;margin-bottom:5px">Этот раздел сайта еще в разработке</strong><span style="font-size:12px;line-height:1.5;color:var(--text-2)"></span></div><button aria-label="Закрыть" style="border:0;background:transparent;color:var(--text-3);font-size:20px;cursor:pointer;margin-left:8px">×</button></div>';
  const detail=toast.querySelector('span[style*="line-height"]');if(detail)detail.textContent=sectionName||'Мы готовим этот раздел и добавим его в одном из следующих обновлений.';
  toast.querySelector('button').onclick=()=>toast.remove();document.body.appendChild(toast);setTimeout(()=>{if(toast.isConnected)toast.remove()},6000);
 }
@@ -686,7 +686,7 @@ function showDevelopmentNotice(sectionName){
 function toggleCommunityJoin(){
   const btn=document.getElementById('communityJoinBtn');
   if(btn.classList.contains('joined')){btn.classList.remove('joined');btn.textContent='Вступить'}
-  else{btn.classList.add('joined');btn.textContent='✓ Вы участник'}
+  else{btn.classList.add('joined');btn.textContent='<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-1px;margin-right:4px"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Вы участник'}
 }
 
 function globalFilter(){
@@ -725,7 +725,7 @@ function renderGlobalSearchResults(){
  try{JSON.parse(localStorage.getItem('studhub_projects')||'[]').forEach(project=>entries.push({title:project.name,type:'Проект',url:'projects.html',text:(project.desc||'')+' '+(project.tags||[]).join(' ')}));}catch(e){}
  const matches=q?entries.filter(item=>(item.title+' '+item.text+' '+item.type).toLocaleLowerCase('ru').includes(q)):[];
  meta.textContent=q?`Найдено результатов: ${matches.length}`:'Введите запрос, чтобы начать поиск';
- container.innerHTML=!q?'':matches.length?matches.map(item=>`<a class="search-result" href="${item.url}"><span class="search-result-type">${item.type}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></a>`).join(''):'<div class="search-no-results">🔎 Ничего не найдено. Попробуй изменить запрос.</div>';
+ container.innerHTML=!q?'':matches.length?matches.map(item=>`<a class="search-result" href="${item.url}"><span class="search-result-type">${item.type}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.text)}</p></a>`).join(''):'<div class="search-no-results"> Ничего не найдено. Попробуй изменить запрос.</div>';
 }
 
 
@@ -937,15 +937,15 @@ function renderGlobalSearchResults(){
 
   function getFileIcon(name, type) {
     const ext = getFileExtension(name);
-    if ((type || '').startsWith('image/')) return '🖼';
-    if (['zip','rar','7z','tar','gz'].includes(ext)) return '📦';
-    if (['pdf'].includes(ext)) return '📕';
-    if (['doc','docx','txt','md','rtf','odt'].includes(ext)) return '📄';
-    if (['xls','xlsx','csv'].includes(ext)) return '📊';
-    if (['ppt','pptx'].includes(ext)) return '📽';
-    if (['mp4','mov','avi','mkv','webm'].includes(ext)) return '🎬';
-    if (['mp3','wav','ogg','m4a'].includes(ext)) return '🎵';
-    if (['js','ts','html','css','json','py','java','cpp','c','cs','php','rb','go','rs'].includes(ext)) return '💻';
+    if ((type || '').startsWith('image/')) return '';
+    if (['zip','rar','7z','tar','gz'].includes(ext)) return '';
+    if (['pdf'].includes(ext)) return '';
+    if (['doc','docx','txt','md','rtf','odt'].includes(ext)) return '';
+    if (['xls','xlsx','csv'].includes(ext)) return '';
+    if (['ppt','pptx'].includes(ext)) return '';
+    if (['mp4','mov','avi','mkv','webm'].includes(ext)) return '';
+    if (['mp3','wav','ogg','m4a'].includes(ext)) return '';
+    if (['js','ts','html','css','json','py','java','cpp','c','cs','php','rb','go','rs'].includes(ext)) return '';
     return '';
   }
 
@@ -1346,7 +1346,7 @@ window.closeRulesModal = function () {
 window.acceptRules = function () {
   try { localStorage.setItem('studhub_rules_accepted', new Date().toISOString()); } catch (e) {}
   closeRulesModal();
-  alert('Спасибо! Приятного общения в StudHub 🤝');
+  alert('Спасибо! Приятного общения в StudHub ');
 };
 
 // Закрытие модалки правил по клику на затемнение и Esc
@@ -1373,7 +1373,7 @@ function renderHelpFaq(){
   const c=document.getElementById('faqList');
   if(!c)return;
   c.innerHTML=HELP_FAQ.map((f,i)=>
-    `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q}<span class="faq-arrow">▾</span></button><div class="faq-a"${i===0?' style="display:block"':''}><p>${f.a}</p></div></div>`
+    `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q}<svg class="faq-arrow" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg></button><div class="faq-a"${i===0?' style="display:block"':''}><p>${f.a}</p></div></div>`
   ).join('');
 }
 function toggleFaq(btn){
@@ -1393,7 +1393,7 @@ function openHelpTicketModal(){
     m=document.createElement('div');
     m.id='helpTicketModal';m.className='modal-overlay';m.style.display='none';
     m.innerHTML='<div class="modal" style="max-width:520px">'+
-      '<div class="modal-header"><h3>🛠 Сообщить о проблеме</h3><button class="modal-close" onclick="closeHelpTicketModal()">✕</button></div>'+
+      '<div class="modal-header"><h3>Сообщить о проблеме</h3><button class="modal-close" onclick="closeHelpTicketModal()">✕</button></div>'+
       '<div class="modal-body">'+
       '<div class="form-group"><label class="form-label">Что случилось? *</label><input type="text" class="form-input" id="ticketSubject" placeholder="Например: не открывается страница проекта"></div>'+
       '<div class="form-group"><label class="form-label">Опиши подробнее</label><textarea class="form-input" id="ticketText" rows="4" placeholder="Шаги, которые привели к проблеме, браузер, скриншот (можно описать словами)…"></textarea></div>'+
@@ -1416,7 +1416,7 @@ function submitHelpTicket(){
     localStorage.setItem('studhub_help_tickets',JSON.stringify(tickets));
   }catch(e){}
   closeHelpTicketModal();
-  alert('Спасибо! Тикет отправлен — команда StudHub ответит в течение дня 🧡');
+  alert('Спасибо! Тикет отправлен — команда StudHub ответит в течение дня ');
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -1455,8 +1455,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Старые ссылки вида index.html#myprojects / #help → на нужные страницы
   (function(){
     const h=(location.hash||'').replace('#','');
-    if(h==='myprojects'){ location.replace('pages/assets.html'); }
-    else if(h==='help'){ location.replace('pages/help.html'); }
+    const inPages=location.pathname.indexOf('/pages/')!==-1;
+    const assetsHref=inPages?'assets.html':'pages/assets.html';
+    const helpHref=inPages?'help.html':'pages/help.html';
+    if(h==='myprojects'){ location.replace(assetsHref); }
+    else if(h==='help'){ location.replace(helpHref); }
   })();
 
   const searchPageInput=document.getElementById('searchPageInput');
@@ -1470,7 +1473,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       setTimeout(function () {
         const hint = document.createElement('div');
         hint.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow-lg);max-width:320px;font-family:inherit;animation:fadeIn .3s ease';
-        hint.innerHTML = '<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px">📜 Правила StudHub</div>' +
+        hint.innerHTML = '<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px"> Правила StudHub</div>' +
           '<div style="font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:10px">Ознакомься с правилами сообщества, прежде чем начать общение.</div>' +
           '<div style="display:flex;gap:8px">' +
           '<button onclick="openRulesModal()" style="flex:1;background:var(--accent);color:#fff;border:none;padding:8px 12px;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">Открыть правила</button>' +
