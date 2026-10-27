@@ -1455,8 +1455,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Старые ссылки вида index.html#myprojects / #help → на нужные страницы
   (function(){
     const h=(location.hash||'').replace('#','');
-    if(h==='myprojects'){ location.replace('pages/assets.html'); }
-    else if(h==='help'){ location.replace('pages/help.html'); }
+    const inPages=location.pathname.indexOf('/pages/')!==-1;
+    const assetsHref=inPages?'assets.html':'pages/assets.html';
+    const helpHref=inPages?'help.html':'pages/help.html';
+    if(h==='myprojects'){ location.replace(assetsHref); }
+    else if(h==='help'){ location.replace(helpHref); }
   })();
 
   const searchPageInput=document.getElementById('searchPageInput');
