@@ -152,6 +152,13 @@ function renderMyProjects(){
     `<div class="empty-projects"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><h3>Ваших проектов пока нет</h3><p>Создайте первый проект — он появится здесь!</p></div>`;
   const mac=document.getElementById('navMyProjectsCount');
   if(mac)mac.textContent=getProjects().filter(isMyProject).length;
+  // «Мои активы» = личные проекты пользователя + прикреплённые к ним файлы
+  const mc=document.getElementById('myAssetsProjectsContainer');
+  if(mc){
+    const allMine=getProjects().filter(isMyProject).sort((a,b)=>b.createdAt-a.createdAt);
+    mc.innerHTML = allMine.length ? allMine.map(projectCardHTML).join('') :
+      `<div class="empty-projects"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg><h3>У тебя пока нет своих проектов</h3><p>Создай проект во вкладке «Проекты» или нажми «Создать проект» — он станет твоим активом на StudHub.</p></div>`;
+  }
 }
 function filterMyProjectsByTab(filter,btn){
   myProjectsFilter=filter;
@@ -1353,6 +1360,65 @@ window.acceptRules = function () {
 })();
 
 /* ================= DROPDOWNS + INIT ================= */
+/* ================= ПОМОЩЬ: FAQ, ГАЙДЫ, ТИКЕТЫ ================= */
+const HELP_FAQ=[
+  {q:'Как поддержать проект деньгами?',a:'Открой страницу проекта, нажми яркую фисташковую кнопку «Поддержать», выбери сумму и оплати через защищённый шлюз. Даже 100 ₽ помогают проекту подняться в рекомендациях.'},
+  {q:'Я не автор, но хочу помочь идее. Что делать?',a:'Не обязательно быть разработчиком: можно поддержать рублём, стать тестировщиком, дизайнером или просто распространять ссылку на проект среди одногруппников.'},
+  {q:'Что за «Маркетплейс незавершённых проектов»?',a:'Это раздел, где студенты продают или передают заброшенный код, дизайн или исследование тому, кто готов его доделать. Такие проекты отлично подходят как база для диплома или портфолио.'},
+  {q:'Как связаться с автором проекта?',a:'Используй обсуждения на странице проекта или встроенный мессенджер StudHub — так все договорённости сохраняются в истории проекта и остаются безопасными.'},
+  {q:'Куда деваются мои файлы из «Мои активы»?',a:'Ничего не теряется: во вкладке «Мои активы» собраны именно твои проекты и прикреплённые к ним материалы (документы, макеты, архивы).'},
+  {q:'Проект не набирает поддержку. С чего начать?',a:'Первую волну (≈30% от цели) обычно приводят друзья и подписчики автора — скинь ссылку в свои чаты. И добавь визуал: проекты с картинками собирают на 70% больше поддержки.'}
+];
+function renderHelpFaq(){
+  const c=document.getElementById('faqList');
+  if(!c)return;
+  c.innerHTML=HELP_FAQ.map((f,i)=>
+    `<div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">${f.q}<span class="faq-arrow">▾</span></button><div class="faq-a"${i===0?' style="display:block"':''}><p>${f.a}</p></div></div>`
+  ).join('');
+}
+function toggleFaq(btn){
+  const a=btn.nextElementSibling;
+  const open=a.style.display==='block';
+  btn.closest('.faq-list').querySelectorAll('.faq-a').forEach(x=>x.style.display='none');
+  btn.closest('.faq-list').querySelectorAll('.faq-q').forEach(x=>x.classList.remove('open'));
+  if(!open){a.style.display='block';btn.classList.add('open');}
+}
+function renderHelpGuides(){
+  renderHelpFaq();
+  renderMyProjects();
+}
+function openHelpTicketModal(){
+  let m=document.getElementById('helpTicketModal');
+  if(!m){
+    m=document.createElement('div');
+    m.id='helpTicketModal';m.className='modal-overlay';m.style.display='none';
+    m.innerHTML='<div class="modal" style="max-width:520px">'+
+      '<div class="modal-header"><h3>🛠 Сообщить о проблеме</h3><button class="modal-close" onclick="closeHelpTicketModal()">✕</button></div>'+
+      '<div class="modal-body">'+
+      '<div class="form-group"><label class="form-label">Что случилось? *</label><input type="text" class="form-input" id="ticketSubject" placeholder="Например: не открывается страница проекта"></div>'+
+      '<div class="form-group"><label class="form-label">Опиши подробнее</label><textarea class="form-input" id="ticketText" rows="4" placeholder="Шаги, которые привели к проблеме, браузер, скриншот (можно описать словами)…"></textarea></div>'+
+      '<div class="form-group"><label class="form-label">Email для ответа (необязательно)</label><input type="email" class="form-input" id="ticketEmail" placeholder="you@studhub.ru"></div>'+
+      '</div>'+
+      '<div class="modal-footer"><button class="btn-auth secondary" onclick="closeHelpTicketModal()">Отмена</button><button class="btn-auth" onclick="submitHelpTicket()">Отправить</button></div>'+
+      '</div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',e=>{if(e.target===m)closeHelpTicketModal()});
+  }
+  m.style.display='flex';
+}
+function closeHelpTicketModal(){const m=document.getElementById('helpTicketModal');if(m)m.style.display='none'}
+function submitHelpTicket(){
+  const subject=(document.getElementById('ticketSubject').value||'').trim();
+  if(!subject){alert('Кратко опиши, что случилось');return}
+  try{
+    const tickets=JSON.parse(localStorage.getItem('studhub_help_tickets')||'[]');
+    tickets.unshift({id:Date.now(),subject,text:(document.getElementById('ticketText').value||'').trim(),email:(document.getElementById('ticketEmail').value||'').trim(),createdAt:new Date().toISOString()});
+    localStorage.setItem('studhub_help_tickets',JSON.stringify(tickets));
+  }catch(e){}
+  closeHelpTicketModal();
+  alert('Спасибо! Тикет отправлен — команда StudHub ответит в течение дня 🧡');
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   const w=document.getElementById('communityWindows');
   if(w)w.innerHTML=Array(32).fill('<div class="window"></div>').join('');
@@ -1385,6 +1451,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(document.getElementById('subscriptionsContainer')||document.getElementById('subscriptionsContainerHome'))renderSubscriptions('all');
   if(document.getElementById('assetUploadInput')||document.getElementById('assetsContainer'))setupUploadDropzone();
   if(document.getElementById('assetsContainer'))renderAssets('all');
+  renderHelpGuides();
+  // Раскрытие раздела по хешу (#myprojects — «Мои активы», #help — «Помощь»)
+  (function(){
+    const h=(location.hash||'').replace('#','');
+    if(h && document.getElementById('sec-'+h)) showSection(h);
+  })();
 
   const searchPageInput=document.getElementById('searchPageInput');
   if(searchPageInput){const params=new URLSearchParams(location.search);searchPageInput.value=params.get('q')||'';if(searchPageInput.value)renderGlobalSearchResults();}

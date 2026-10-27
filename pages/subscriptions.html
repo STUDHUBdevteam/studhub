@@ -59,7 +59,7 @@
     <a class="nav-item" data-nav="home" href="../index.html"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Главная</a>
     <a class="nav-item" data-nav="communities" href="communities.html"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Сообщества</a>
     <a class="nav-item" data-nav="projects" href="projects.html"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Проекты<span class="count" id="navProjectsCount">0</span></a>
-    <a class="nav-item" data-nav="help" href="help.html"><svg viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>Помощь</a>
+    <a class="nav-item" data-nav="myprojects" href="../index.html#myprojects"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>Мои активы<span class="count" id="navMyProjectsCount">0</span></a>
     <a class="nav-item active" data-nav="subscriptions" href="subscriptions.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Подписки<span class="count">8</span></a>
     <a class="nav-item" data-nav="profile" href="profile.html"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Мой профиль</a>
     <div class="section-label">Мои сообщества<span class="add" onclick="showDevelopmentNotice('Создание сообщества в разработке')">+</span></div>
@@ -70,7 +70,7 @@
     <div class="studpro-card"><div class="sp-title">✦ StudPro</div><div class="sp-desc">Больше возможностей для твоих идей и проектов.</div><div class="sp-link" onclick="showDevelopmentNotice('StudPro в разработке')">Узнать больше ↗</div></div>
     <div class="sidebar-footer">
       <a class="nav-item" href="settings.html"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Настройки</a>
-      <div class="footer-links"><a href="#">О StudHub</a> · <a href="#" onclick="openRulesModal();return false">Правила</a> · <a href="#">Конфиденциальность</a> ©<br>StudHub, 2026</div>
+      <div class="footer-links"><a href="#">О StudHub</a> · <a href="#" onclick="openRulesModal();return false">Правила</a> · <a href="#">Конфиденциальность</a> · <a href="help.html" class="footer-help-link">Помощь</a> ©<br>StudHub, 2026</div>
     </div>
   </aside>
 
@@ -199,7 +199,33 @@
             <div class="help-step"><span class="help-step-num">1</span><div><div class="help-step-title">Заведи профиль</div><div class="help-step-desc">Заполни имя, кампус и направление — так тебя найдут будущие сокомандники.</div></div></div>
             <div class="help-step"><span class="help-step-num">2</span><div><div class="help-step-title">Создай проект</div><div class="help-step-desc">Нажми «Создать проект» во вкладке «Проекты»: название, описание, теги и статус.</div></div></div>
             <div class="help-step"><span class="help-step-num">3</span><div><div class="help-step-title">Собери команду</div><div class="help-step-desc">Расскажи о проекте в сообществе КИТиС или найди единомышленников через поиск.</div></div></div>
-            <div class="help-step"><span class="help-step-num">4</span><div><div class="help-step-title">Храни материалы в «Мои проекты»</div><div class="help-step-desc">В разделе «Мои проекты» собирай файлы проекта: документы, макеты и архивы.</div></div></div>
+            <div class="help-step"><span class="help-step-num">4</span><div><div class="help-step-title">Храни материалы в «Мои активы»</div><div class="help-step-desc">В разделе «Мои активы» собирай свои проекты и прикреплённые к ним файлы: документы, макеты и архивы.</div></div></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">📖 Как пользоваться StudHub</h3>
+          <p class="guide-intro">Две короткие инструкции: одна — для тех, кто поддерживает идеи, вторая — для тех, кто их запускает.</p>
+          <div class="guide-card guide-backer">
+            <div class="guide-card-head"><span class="guide-badge badge-green">Для бекеров</span><h4>Как поддержать крутую идею за 3 минуты</h4><p>Ты нашел проект, который тебе откликается? Отлично! Вот как сделать так, чтобы автор получил поддержку, а ты был спокоен за свои деньги.</p></div>
+            <ol class="guide-steps">
+              <li><b>Шаг 1. Изучи проект.</b> Зайди на страницу проекта. Прочитай, какую проблему решает автор, что уже сделано и на что нужны средства. Не стесняйся задать вопрос в разделе обсуждений — авторы любят живую обратную связь!</li>
+              <li><b>Шаг 2. Нажми кнопку «Поддержать».</b> Она обычно яркая (нашего фирменного фисташкового цвета 😉).</li>
+              <li><b>Шаг 3. Выбери сумму и оставь послание (по желанию).</b> Ты можешь поддержать любой суммой. Даже 100 рублей помогают проекту подняться в рекомендациях. Оставь короткий комментарий: «Удачи!» или «Жду релиз, крутая идея». Это сильно мотивирует авторов.</li>
+              <li><b>Шаг 4. Безопасная оплата.</b> Перейди к оплате. Мы используем защищённые шлюзы, так что твои данные в безопасности.</li>
+              <li><b>Шаг 5. Оставайся на связи.</b> После поддержки ты автоматически попадаешь в круг доверия проекта. Автор сможет писать тебе обновления о прогрессе прямо во встроенном мессенджере StudHub.</li>
+            </ol>
+            <div class="guide-tip">💡 <b>Лайфхак:</b> если проект тебе очень понравился, но сейчас нет возможности задонатить — просто нажми кнопку «Поделиться» и скинь ссылку в чат одногруппникам. Сарафанное радио работает лучше любой рекламы!</div>
+          </div>
+          <div class="guide-card guide-author">
+            <div class="guide-card-head"><span class="guide-badge badge-purple">Для авторов</span><h4>Как запустить проект или найти ему нового хозяина</h4><p>У тебя есть идея, прототип или недоделанный код, который пылится на диске? Не удаляй его. Дай ему второй шанс на StudHub.</p></div>
+            <ol class="guide-steps">
+              <li><b>Шаг 1. Быстрая регистрация.</b> Создай аккаунт. Заполни профиль: добавь аватарку, напиши пару слов о себе и укажи свой вуз/факультет. Это повысит доверие к тебе.</li>
+              <li><b>Шаг 2. Выбери тип публикации.</b> У нас два пути, выбери свой:<br>🆕 <b>Краудфандинг</b> — ты запускаешь новый проект с нуля и ищешь поддержку (деньгами, советами или командой).<br>🔄 <b>Маркетплейс незавершённых проектов</b> — ты продаёшь или передаёшь свой заброшенный код, дизайн или исследование тому, кто готов его доделать.</li>
+              <li><b>Шаг 3. Заполни карточку проекта.</b> Не нужно писать диссертацию. Отвечай честно и по делу:<br>1. <b>Название и суть:</b> что это и какую проблему решает? (1–2 предложения).<br>2. <b>Что уже сделано:</b> скриншоты, ссылка на GitHub/Figma, краткое описание текущего статуса.<br>3. <b>Чего не хватает:</b> денег на хостинг? дизайнера? тестировщика? Честно укажи цель.<br>4. <b>Медиа:</b> добавь 1–2 картинки или короткое видео. Проекты с визуалом собирают на 70% больше поддержки.</li>
+              <li><b>Шаг 4. Публикация и первый толчок.</b> Нажми «Опубликовать». Платформа сгенерирует тебе красивую ссылку. Важно: платформа дает инструмент, но первую волну поддержки (30% от цели) обычно приводят друзья, одногруппники и подписчики автора. Скинь ссылку в свои чаты!</li>
+              <li><b>Шаг 5. Общайся во встроенном мессенджере.</b> Когда к тебе постучатся потенциальные соавторы или покупатели, не уводи их в Telegram. Общайтесь и обменивайтесь файлами прямо в StudHub — это безопасно, и все договорённости сохраняются в истории проекта.</li>
+            </ol>
+            <div class="guide-tip">💡 <b>Лайфхак:</b> если ты продаёшь недоделанный проект, укажи в описании: «Идеально подойдет для портфолио или как база для дипломной работы». Это сразу бьет в цель твоей аудитории.</div>
           </div>
         </div>
         <div class="settings-section">
@@ -209,7 +235,7 @@
         <div class="settings-section">
           <h3 class="settings-section-title">🧭 Разделы StudHub</h3>
           <div class="settings-item"><div><div class="settings-item-title">Проекты</div><div class="settings-item-desc">Все студенческие проекты колледжа: активные, черновики и завершённые.</div></div><a class="btn-small" href="pages/projects.html" data-help-link="projects">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Мои проекты</div><div class="settings-item-desc">Твои личные проекты и прикреплённые к ним файлы и материалы.</div></div><a class="btn-small" href="pages/assets.html" data-help-link="assets">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Мои активы</div><div class="settings-item-desc">Именно твои проекты и прикреплённые к ним файлы и материалы.</div></div><a class="btn-small" href="pages/assets.html" data-help-link="assets">Открыть</a></div>
           <div class="settings-item"><div><div class="settings-item-title">Сообщества</div><div class="settings-item-desc">КИТиС, «Кодим вместе» и другие студенческие сообщества.</div></div><a class="btn-small" href="pages/communities.html" data-help-link="communities">Открыть</a></div>
           <div class="settings-item"><div><div class="settings-item-title">Подписки</div><div class="settings-item-desc">Люди и сообщества, на которых ты подписан.</div></div><a class="btn-small" href="pages/subscriptions.html" data-help-link="subscriptions">Открыть</a></div>
           <div class="settings-item"><div><div class="settings-item-title">Мой профиль</div><div class="settings-item-desc">Публикации, проекты и сохранённое — всё на одной странице.</div></div><a class="btn-small" href="pages/profile.html" data-help-link="profile">Открыть</a></div>
@@ -230,10 +256,15 @@
     </div>
 
     <div class="section" id="sec-myprojects">
-      <div class="breadcrumb">&gt;&gt; Мои проекты</div>
+      <div class="breadcrumb">&gt;&gt; Мои активы</div>
       <div class="page-header-row">
-        <h1 class="page-title">Мои проекты</h1>
+        <h1 class="page-title">Мои активы</h1>
         <button class="btn-create" onclick="openCreateProjectModal()" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать проект</button>
+      </div>
+      <p class="assets-intro">Здесь собраны именно твои проекты и прикреплённые к ним материалы — всё, что ты создал и опубликовал на StudHub.</p>
+      <div class="assets-block">
+        <div class="assets-block-head"><h2 class="subscriptions-section-title" style="border:none;padding:0;margin:0">🚀 Мои проекты</h2><button class="btn-small" onclick="openCreateProjectModal()">Создать проект</button></div>
+        <div id="myAssetsProjectsContainer" class="projects-grid"></div>
       </div>
       <div class="tabs-row" id="myProjectsTabsRow">
         <button class="tab-btn active" onclick="filterMyProjectsByTab('all',this)">Все мои проекты</button>
@@ -360,7 +391,7 @@
         <div><div class="profile-sidebar-name">Дмитрий С.</div><div class="profile-sidebar-role">✦ Студент · КИТиС</div></div>
       </div>
       <div style="font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:12px">Пишу код, собираю команду и превращаю идеи в проекты.</div>
-      <a class="quick-link" href="development.html?section=library">📚 Библиотека и материалы</a>
+      <a class="quick-link" href="../index.html#myprojects">📦 Мои активы</a>
       <a class="quick-link" href="development.html?section=career">💼 Карьера и стажировки</a>
       <a class="quick-link" href="help.html">🆘 Помощь и поддержка</a>
     </div>

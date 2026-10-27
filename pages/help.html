@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    var t = localStorage.getItem('studhub_theme') || 'light';
+    var eff = t === 'system'
+      ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      : t;
+    document.documentElement.setAttribute('data-theme', eff);
+  }catch(e){ document.documentElement.setAttribute('data-theme','light'); }
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudHub</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.16/index.min.css">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <a class="logo" href="../index.html"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg></div><div class="logo-text">Stud<span>Hub</span></div></a>
+  </div>
+  <div class="header-center"><div class="search-bar"><input type="text" placeholder="Поищем?" id="globalSearch" oninput="globalFilter()" onkeydown="if(event.key==='Enter')openGlobalSearch()"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+  <div class="header-right">
+    <button class="btn-create" onclick="openCreateProjectModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать проект</button>
+    <button class="header-icon theme-toggle" id="themeToggle" title="Сменить тему" onclick="cycleTheme()" type="button">
+      <svg class="ic ic-sun" viewBox="0 0 24 24"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg>
+      <svg class="ic ic-moon" viewBox="0 0 24 24"><path d="M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z"/></svg>
+    </button>
+    <div class="header-icon" id="notifIcon" title="Уведомления"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg><div class="badge" id="notifBadge">3</div>
+      <div class="notif-dropdown" id="notifDropdown">
+        <div class="notif-header">Уведомления</div>
+        <div class="notif-item unread"><div class="notif-avatar" style="background:var(--accent-soft);color:var(--accent-soft-text)">П</div><div class="notif-content"><div class="notif-text"><strong>П. Глушнев</strong> ответил на ваш комментарий</div><div class="notif-time">15 минут назад</div></div><div class="notif-dot"></div></div>
+        <div class="notif-item unread"><div class="notif-avatar" style="background:var(--purple-soft);color:var(--purple-text)">Л</div><div class="notif-content"><div class="notif-text"><strong>Л. Галлахер</strong> пригласил вас в команду</div><div class="notif-time">2 часа назад</div></div><div class="notif-dot"></div></div>
+        <div class="notif-item"><div class="notif-avatar" style="background:var(--blue-soft);color:var(--blue-text)">К</div><div class="notif-content"><div class="notif-text">Новое обсуждение в <strong>КИТиС</strong></div><div class="notif-time">5 часов назад</div></div></div>
+      </div>
+    </div>
+    <div class="user-profile" id="userProfile">
+      <div class="user-avatar">ДС</div>
+      <div class="user-info"><span class="user-name">Дмитрий С.</span><span class="user-role">✦ Студент · <span class="pro">PRO</span></span></div>
+      <span class="dropdown-arrow">▾</span>
+      <div class="dropdown" id="profileDropdown">
+        <a class="dropdown-item" href="profile.html"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Мой профиль</a>
+        <a class="dropdown-item" href="settings.html"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Настройки</a>
+        <a class="dropdown-item" href="#" onclick="showDevelopmentNotice('Смена аккаунта в разработке');return false"><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>Сменить аккаунт</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item danger" href="#" onclick="alert('Вы вышли (демо)');return false"><svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>Выйти</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar-left">
+    <a class="nav-item" data-nav="home" href="../index.html"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>Главная</a>
+    <a class="nav-item" data-nav="communities" href="communities.html"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>Сообщества</a>
+    <a class="nav-item" data-nav="projects" href="projects.html"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Проекты<span class="count" id="navProjectsCount">0</span></a>
+    <a class="nav-item" data-nav="myprojects" href="../index.html#myprojects"><svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>Мои активы<span class="count" id="navMyProjectsCount">0</span></a>
+    <a class="nav-item" data-nav="subscriptions" href="subscriptions.html"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>Подписки<span class="count">8</span></a>
+    <a class="nav-item" data-nav="profile" href="profile.html"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Мой профиль</a>
+    <div class="section-label">Мои сообщества<span class="add" onclick="showDevelopmentNotice('Создание сообщества в разработке')">+</span></div>
+    <a class="nav-item" href="communities.html"><div class="mini-avatar" style="background:var(--accent-soft);color:var(--accent-soft-text)">К</div>КИТиС<span class="count">12</span></a>
+    <a class="nav-item" href="communities.html"><div class="mini-avatar" style="background:var(--purple-soft);color:var(--purple-text)">О</div>Жизнь в общаге<span class="count">5</span></a>
+    <a class="nav-item" href="communities.html"><div class="mini-avatar" style="background:var(--accent-soft);color:var(--accent-soft-text)">#</div>Кодим вместе<span class="count">3</span></a>
+    <a class="all-communities" href="communities.html">Все сообщества ↗</a>
+    <div class="studpro-card"><div class="sp-title">✦ StudPro</div><div class="sp-desc">Больше возможностей для твоих идей и проектов.</div><div class="sp-link" onclick="showDevelopmentNotice('StudPro в разработке')">Узнать больше ↗</div></div>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="settings.html"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>Настройки</a>
+      <div class="footer-links"><a href="#">О StudHub</a> · <a href="#" onclick="openRulesModal();return false">Правила</a> · <a href="#">Конфиденциальность</a> · <a href="help.html" class="footer-help-link">Помощь</a> ©<br>StudHub, 2026</div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <div class="section" id="sec-home">
+      <div class="breadcrumb">&gt;&gt; Калининградская область</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Главная</h1>
+        <div class="online-count"><div class="online-dot"></div><span>248</span> студентов онлайн</div>
+      </div>
+      <div class="quote-section">
+        <div class="quote-label">Цитата дня:</div>
+        <div class="quote-text">"Если твоя курсовая сама себя не напишет — напиши её на СтудХабе. Но в файле «ЭТО_ТОЧНО_ЛАСТОВАЯ_КУРСОВАЯ.docx» она расписана идеально."</div>
+      </div>
+
+      <div class="community-banner">
+        <div class="community-cover">
+          <div class="cover-demo">DEMO</div>
+          <button class="cover-edit-btn" onclick="showDevelopmentNotice('Смена обложки в разработке')"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Изменить обложку</button>
+          <div class="sky"></div>
+          <div class="building">
+            <div class="banner">КОЛЛЕДЖ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ И СТРОИТЕЛЬСТВА<small>КИТиС · тел: +7 (4012) 91 61 06</small></div>
+            <div class="windows" id="communityWindows"></div>
+            <div class="welcome">Добро пожаловать!</div>
+          </div>
+        </div>
+        <div class="community-info">
+          <div class="community-info-top">
+            <div class="community-info-left">
+              <div class="community-avatar">К</div>
+              <div>
+                <div class="community-name">КИТиС</div>
+                <div class="community-desc-short">Колледж информационных технологий и строительства</div>
+                <div class="community-address">Калининград, ул. Правая наб., 18б</div>
+              </div>
+            </div>
+            <div class="community-actions">
+              <button class="btn-join joined" id="communityJoinBtn" onclick="toggleCommunityJoin()">✓ Вы участник</button>
+              <button class="btn-invite" onclick="alert('Ссылка-приглашение скопирована!')">👥 Пригласить друзей</button>
+            </div>
+          </div>
+          <div class="community-stats">
+            <div><div class="community-stat-num">1 284</div><div class="community-stat-label">участника</div></div>
+            <div><div class="community-stat-num">86</div><div class="community-stat-label">онлайн</div></div>
+            <div style="flex:1;min-width:200px"><div style="font-size:12px;color:var(--text-2)">Студенты, выпускники и друзья колледжа</div></div>
+          </div>
+          <div class="community-about">
+            <h4>О колледже</h4>
+            <p>КИТиС — Колледж информационных технологий и строительства в Калининграде. Здесь обучаются будущие разработчики, ИТ-специалисты, дизайнеры и строители. В этом сообществе собираются студенты и выпускники, обсуждают учёбу, делятся находками, ищут команды для проектов и просто общаются.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="projects-section">
+        <div class="projects-section-header">
+          <h2 class="projects-section-title">Проекты</h2>
+          <button class="btn-create" onclick="openCreateProjectModal()" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать проект</button>
+        </div>
+        <div class="projects-stats">
+          <div><div class="community-stat-num" id="statTotal">0</div><div class="community-stat-label">Всего проектов</div></div>
+          <div><div class="community-stat-num" id="statActive">0</div><div class="community-stat-label">Активных</div></div>
+          <div><div class="community-stat-num" id="statViews">0</div><div class="community-stat-label">Всего просмотров</div></div>
+          <div><div class="community-stat-num" id="statLikes">0</div><div class="community-stat-label">Всего лайков</div></div>
+        </div>
+        <div class="tabs-row">
+          <button class="tab-btn active" onclick="filterByTab('all',this)">Все проекты</button>
+          <button class="tab-btn" onclick="filterByTab('active',this)">Активные</button>
+          <button class="tab-btn" onclick="filterByTab('draft',this)">Черновики</button>
+          <button class="tab-btn" onclick="filterByTab('done',this)">Завершённые</button>
+        </div>
+        <div id="projectsContainer" class="projects-grid"></div>
+      </div>
+
+      <div class="subscriptions-section">
+        <h2 class="subscriptions-section-title">Мои подписки <span style="font-size:14px;color:var(--text-3);font-weight:500">8</span></h2>
+        <div id="subscriptionsContainerHome"></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-projects">
+      <div class="breadcrumb">&gt;&gt; Проекты</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Проекты</h1>
+        <button class="btn-create" onclick="openCreateProjectModal()" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать проект</button>
+      </div>
+      <div class="projects-stats">
+        <div><div class="community-stat-num" id="statTotal2">0</div><div class="community-stat-label">Всего проектов</div></div>
+        <div><div class="community-stat-num" id="statActive2">0</div><div class="community-stat-label">Активных</div></div>
+        <div><div class="community-stat-num" id="statViews2">0</div><div class="community-stat-label">Всего просмотров</div></div>
+        <div><div class="community-stat-num" id="statLikes2">0</div><div class="community-stat-label">Всего лайков</div></div>
+      </div>
+      <div class="tabs-row">
+        <button class="tab-btn active" onclick="filterByTab('all',this)">Все проекты</button>
+        <button class="tab-btn" onclick="filterByTab('active',this)">Активные</button>
+        <button class="tab-btn" onclick="filterByTab('draft',this)">Черновики</button>
+        <button class="tab-btn" onclick="filterByTab('done',this)">Завершённые</button>
+      </div>
+      <div id="projectsContainer2" class="projects-grid"></div>
+    </div>
+
+    <div class="section" id="sec-communities">
+      <div class="breadcrumb">&gt;&gt; Сообщества</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Сообщества</h1>
+        <button class="btn-create" onclick="showDevelopmentNotice('Создание сообщества в разработке')" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать сообщество</button>
+      </div>
+      <div class="tabs-row">
+        <button class="tab-btn active" onclick="filterCommunitiesByType('all',this)">Все</button>
+        <button class="tab-btn" onclick="filterCommunitiesByType('my',this)">Мои</button>
+        <button class="tab-btn" onclick="filterCommunitiesByType('popular',this)">Популярные</button>
+        <button class="tab-btn" onclick="filterCommunitiesByType('new',this)">Новые</button>
+      </div>
+      <div id="communitiesContainer" class="community-grid"></div>
+    </div>
+
+    <div class="section visible" id="sec-myprojects">
+      <div class="breadcrumb">&gt;&gt; Мои активы</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Мои активы</h1>
+        <button class="btn-create" onclick="openCreateProjectModal()" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Создать проект</button>
+      </div>
+      <p class="assets-intro">Здесь собраны именно твои проекты и прикреплённые к ним материалы — всё, что ты создал и опубликовал на StudHub.</p>
+      <div class="assets-block">
+        <div class="assets-block-head"><h2 class="subscriptions-section-title" style="border:none;padding:0;margin:0">🚀 Мои проекты</h2><button class="btn-small" onclick="openCreateProjectModal()">Создать проект</button></div>
+        <div id="myAssetsProjectsContainer" class="projects-grid"></div>
+      </div>
+      <div class="tabs-row" id="myProjectsTabsRow">
+        <button class="tab-btn active" onclick="filterMyProjectsByTab('all',this)">Все мои проекты</button>
+        <button class="tab-btn" onclick="filterMyProjectsByTab('active',this)">Активные</button>
+        <button class="tab-btn" onclick="filterMyProjectsByTab('draft',this)">Черновики</button>
+        <button class="tab-btn" onclick="filterMyProjectsByTab('done',this)">Завершённые</button>
+      </div>
+      <div id="myProjectsContainer" class="projects-grid"></div>
+      <div class="projects-section" style="margin-top:24px">
+        <div class="projects-section-header">
+          <h2 class="subscriptions-section-title" style="border:none;padding:0;margin:0">📁 Файлы и материалы</h2>
+          <button class="btn-small" onclick="openUploadModal()">Загрузить файл</button>
+        </div>
+        <div class="tabs-row">
+          <button class="tab-btn active" onclick="filterAssetsByType('all',this)">Все файлы</button>
+          <button class="tab-btn" onclick="filterAssetsByType('doc',this)">Документы</button>
+          <button class="tab-btn" onclick="filterAssetsByType('img',this)">Изображения</button>
+          <button class="tab-btn" onclick="filterAssetsByType('archive',this)">Архивы</button>
+        </div>
+        <div id="assetsContainer" class="assets-list"></div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-help">
+      <div class="breadcrumb">&gt;&gt; Помощь</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Помощь</h1>
+        <button class="btn-create" onclick="showDevelopmentNotice('Личный чат с поддержкой в разработке')" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm1.07-5.75l-.92.97C12.43 9.95 12 10.53 12 11.5c0 .28.02.5.05.78h1.87c-.03-.28-.05-.5-.05-.78 0-.47.17-.78.48-1.1l.68-.72c.42-.44.69-1.03.69-1.65 0-1.4-1.18-2.5-2.72-2.5-1.48 0-2.73 1.05-2.73 2.5h2c0-.28.12-.5.32-.68z"/></svg>Написать в поддержку</button>
+      </div>
+      <div class="settings-container">
+        <div class="settings-section">
+          <h3 class="settings-section-title">🚀 Быстрый старт</h3>
+          <div class="help-steps">
+            <div class="help-step"><span class="help-step-num">1</span><div><div class="help-step-title">Заведи профиль</div><div class="help-step-desc">Заполни имя, кампус и направление — так тебя найдут будущие сокомандники.</div></div></div>
+            <div class="help-step"><span class="help-step-num">2</span><div><div class="help-step-title">Создай проект</div><div class="help-step-desc">Нажми «Создать проект» во вкладке «Проекты»: название, описание, теги и статус.</div></div></div>
+            <div class="help-step"><span class="help-step-num">3</span><div><div class="help-step-title">Собери команду</div><div class="help-step-desc">Расскажи о проекте в сообществе КИТиС или найди единомышленников через поиск.</div></div></div>
+            <div class="help-step"><span class="help-step-num">4</span><div><div class="help-step-title">Храни материалы в «Мои активы»</div><div class="help-step-desc">В разделе «Мои активы» собирай свои проекты и прикреплённые к ним файлы: документы, макеты и архивы.</div></div></div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">📖 Как пользоваться StudHub</h3>
+          <p class="guide-intro">Две короткие инструкции: одна — для тех, кто поддерживает идеи, вторая — для тех, кто их запускает.</p>
+          <div class="guide-card guide-backer">
+            <div class="guide-card-head"><span class="guide-badge badge-green">Для бекеров</span><h4>Как поддержать крутую идею за 3 минуты</h4><p>Ты нашел проект, который тебе откликается? Отлично! Вот как сделать так, чтобы автор получил поддержку, а ты был спокоен за свои деньги.</p></div>
+            <ol class="guide-steps">
+              <li><b>Шаг 1. Изучи проект.</b> Зайди на страницу проекта. Прочитай, какую проблему решает автор, что уже сделано и на что нужны средства. Не стесняйся задать вопрос в разделе обсуждений — авторы любят живую обратную связь!</li>
+              <li><b>Шаг 2. Нажми кнопку «Поддержать».</b> Она обычно яркая (нашего фирменного фисташкового цвета 😉).</li>
+              <li><b>Шаг 3. Выбери сумму и оставь послание (по желанию).</b> Ты можешь поддержать любой суммой. Даже 100 рублей помогают проекту подняться в рекомендациях. Оставь короткий комментарий: «Удачи!» или «Жду релиз, крутая идея». Это сильно мотивирует авторов.</li>
+              <li><b>Шаг 4. Безопасная оплата.</b> Перейди к оплате. Мы используем защищённые шлюзы, так что твои данные в безопасности.</li>
+              <li><b>Шаг 5. Оставайся на связи.</b> После поддержки ты автоматически попадаешь в круг доверия проекта. Автор сможет писать тебе обновления о прогрессе прямо во встроенном мессенджере StudHub.</li>
+            </ol>
+            <div class="guide-tip">💡 <b>Лайфхак:</b> если проект тебе очень понравился, но сейчас нет возможности задонатить — просто нажми кнопку «Поделиться» и скинь ссылку в чат одногруппникам. Сарафанное радио работает лучше любой рекламы!</div>
+          </div>
+          <div class="guide-card guide-author">
+            <div class="guide-card-head"><span class="guide-badge badge-purple">Для авторов</span><h4>Как запустить проект или найти ему нового хозяина</h4><p>У тебя есть идея, прототип или недоделанный код, который пылится на диске? Не удаляй его. Дай ему второй шанс на StudHub.</p></div>
+            <ol class="guide-steps">
+              <li><b>Шаг 1. Быстрая регистрация.</b> Создай аккаунт. Заполни профиль: добавь аватарку, напиши пару слов о себе и укажи свой вуз/факультет. Это повысит доверие к тебе.</li>
+              <li><b>Шаг 2. Выбери тип публикации.</b> У нас два пути, выбери свой:<br>🆕 <b>Краудфандинг</b> — ты запускаешь новый проект с нуля и ищешь поддержку (деньгами, советами или командой).<br>🔄 <b>Маркетплейс незавершённых проектов</b> — ты продаёшь или передаёшь свой заброшенный код, дизайн или исследование тому, кто готов его доделать.</li>
+              <li><b>Шаг 3. Заполни карточку проекта.</b> Не нужно писать диссертацию. Отвечай честно и по делу:<br>1. <b>Название и суть:</b> что это и какую проблему решает? (1–2 предложения).<br>2. <b>Что уже сделано:</b> скриншоты, ссылка на GitHub/Figma, краткое описание текущего статуса.<br>3. <b>Чего не хватает:</b> денег на хостинг? дизайнера? тестировщика? Честно укажи цель.<br>4. <b>Медиа:</b> добавь 1–2 картинки или короткое видео. Проекты с визуалом собирают на 70% больше поддержки.</li>
+              <li><b>Шаг 4. Публикация и первый толчок.</b> Нажми «Опубликовать». Платформа сгенерирует тебе красивую ссылку. Важно: платформа дает инструмент, но первую волну поддержки (30% от цели) обычно приводят друзья, одногруппники и подписчики автора. Скинь ссылку в свои чаты!</li>
+              <li><b>Шаг 5. Общайся во встроенном мессенджере.</b> Когда к тебе постучатся потенциальные соавторы или покупатели, не уводи их в Telegram. Общайтесь и обменивайтесь файлами прямо в StudHub — это безопасно, и все договорённости сохраняются в истории проекта.</li>
+            </ol>
+            <div class="guide-tip">💡 <b>Лайфхак:</b> если ты продаёшь недоделанный проект, укажи в описании: «Идеально подойдет для портфолио или как база для дипломной работы». Это сразу бьет в цель твоей аудитории.</div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">❓ Частые вопросы</h3>
+          <div class="faq-list" id="faqList"></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">🧭 Разделы StudHub</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Проекты</div><div class="settings-item-desc">Все студенческие проекты колледжа: активные, черновики и завершённые.</div></div><a class="btn-small" href="projects.html" data-help-link="projects">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Мои активы</div><div class="settings-item-desc">Именно твои проекты и прикреплённые к ним файлы и материалы.</div></div><a class="btn-small" href="assets.html" data-help-link="assets">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Сообщества</div><div class="settings-item-desc">КИТиС, «Кодим вместе» и другие студенческие сообщества.</div></div><a class="btn-small" href="communities.html" data-help-link="communities">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Подписки</div><div class="settings-item-desc">Люди и сообщества, на которых ты подписан.</div></div><a class="btn-small" href="subscriptions.html" data-help-link="subscriptions">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Мой профиль</div><div class="settings-item-desc">Публикации, проекты и сохранённое — всё на одной странице.</div></div><a class="btn-small" href="profile.html" data-help-link="profile">Открыть</a></div>
+          <div class="settings-item"><div><div class="settings-item-title">Настройки</div><div class="settings-item-desc">Аккаунт, безопасность, уведомления и тема оформления.</div></div><a class="btn-small" href="settings.html" data-help-link="settings">Открыть</a></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">💬 Связаться с нами</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Email поддержки</div><div class="settings-item-desc">support@studhub.ru — отвечаем в течение дня</div></div><button class="btn-small" onclick="alert('Скопировано: support@studhub.ru')">Скопировать</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Сообщество «Помощь StudHub»</div><div class="settings-item-desc">Задай вопрос — студенты и команда ответят быстрее</div></div><button class="btn-small" onclick="showDevelopmentNotice('Раздел 'Помощь StudHub' в разработке')">Перейти</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Нашёл ошибку? Сообщи нам</div><div class="settings-item-desc">Опиши, что случилось — починим и не забудем поблагодарить 🎁</div></div><button class="btn-small" onclick="openHelpTicketModal()">Написать</button></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">⚖️ Правила и конфиденциальность</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Правила StudHub</div><div class="settings-item-desc">Где уважуха — там и движуха</div></div><button class="btn-small" onclick="openRulesModal()">Читать</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Конфиденциальность</div><div class="settings-item-desc">Как мы храним твои данные</div></div><button class="btn-small" onclick="showDevelopmentNotice('Раздел 'Конфиденциальность' в разработке')">Читать</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="sec-subscriptions">
+      <div class="breadcrumb">&gt;&gt; Подписки</div>
+      <div class="page-header-row">
+        <h1 class="page-title">Мои подписки</h1>
+        <button class="btn-create" onclick="showSection('communities')" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Найти ещё</button>
+      </div>
+      <div class="tabs-row">
+        <button class="tab-btn active" onclick="filterSubsByType('all',this)">Все (8)</button>
+        <button class="tab-btn" onclick="filterSubsByType('community',this)">Сообщества (6)</button>
+        <button class="tab-btn" onclick="filterSubsByType('people',this)">Люди (2)</button>
+      </div>
+      <div id="subscriptionsContainer"></div>
+    </div>
+
+    <div class="section" id="sec-profile">
+      <h1 class="profile-header-title">Мой профиль</h1>
+      <div class="profile-cover">
+        <div class="cover-demo">DEMO</div>
+        <button class="cover-edit-btn" onclick="showDevelopmentNotice('Смена обложки в разработке')"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Изменить обложку</button>
+      </div>
+      <div class="profile-info-section">
+        <div class="profile-info-top">
+          <div class="profile-avatar-large">ДС</div>
+          <div class="profile-details">
+            <div class="profile-name-row"><span class="profile-name">Дмитрий С.</span><span class="profile-pro-badge">✦ Студент (PRO)</span></div>
+            <div class="profile-subtitle">КИТиС · 1 курс · Калининград</div>
+            <div class="profile-bio">Пишу код, собираю команду и превращаю идеи в проекты.</div>
+          </div>
+          <div class="profile-edit-section">
+            <button class="btn-edit-profile" onclick="openProfileEditModal(false)"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>Редактировать профиль</button>
+            <div class="profile-joined">@dimidrol · На StudHub с сентября 2026</div>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-item"><span class="stat-num">24</span><span class="stat-label">публикации</span></div>
+          <div class="stat-item"><span class="stat-num" id="profileProjectsCount">0</span><span class="stat-label">проекта</span></div>
+          <div class="stat-item"><span class="stat-num">128</span><span class="stat-label">подписчиков</span></div>
+          <div class="stat-item"><span class="stat-num">86</span><span class="stat-label">подписок</span></div>
+          <div class="stat-reviews" onclick="alert('Отзывы:\n⭐⭐⭐⭐⭐ Отличный тимлид!\n⭐⭐⭐⭐⭐ Помог с проектом\n⭐⭐⭐⭐⭐ Рекомендую')">🏆 342 отзыва</div>
+        </div>
+      </div>
+      <div class="profile-tabs">
+        <button class="profile-tab active" onclick="switchProfileTab(this,'pub')">Публикации <span class="tab-count">24</span></button>
+        <button class="profile-tab" onclick="switchProfileTab(this,'proj')">Проекты <span class="tab-count" id="profileProjTabCount">0</span></button>
+        <button class="profile-tab" onclick="switchProfileTab(this,'saved')">Сохранённое <span class="tab-count">16</span></button>
+      </div>
+      <div id="profileTabContent"></div>
+    </div>
+
+    <div class="section" id="sec-settings">
+      <h1 class="profile-header-title">Настройки</h1>
+      <div class="settings-container">
+        <div class="settings-section">
+          <h3 class="settings-section-title">👤 Аккаунт</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Имя</div><div class="settings-item-desc">Дмитрий С.</div></div><button class="btn-small" onclick="openProfileEditModal(false)">Изменить</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Email</div><div class="settings-item-desc">demo@studhub.ru</div></div><button class="btn-small" onclick="openProfileEditModal(false)">Изменить</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Кампус</div><div class="settings-item-desc">КИТиС — Калининград</div></div><button class="btn-small" onclick="openProfileEditModal(false)">Изменить</button></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">🔒 Безопасность</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Пароль</div><div class="settings-item-desc">Последнее изменение: недавно</div></div><button class="btn-small" onclick="openProfileEditModal(true)">Сменить пароль</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Двухфакторная аутентификация</div><div class="settings-item-desc">Дополнительная защита аккаунта</div></div><label class="toggle-switch"><input type="checkbox" onchange="alert(this.checked?'2FA включена':'2FA выключена')"><span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">🔔 Уведомления</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Email-уведомления</div><div class="settings-item-desc">Получать уведомления на почту</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+          <div class="settings-item"><div><div class="settings-item-title">Push-уведомления</div><div class="settings-item-desc">Уведомления в браузере</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">🎨 Внешний вид</h3>
+          <div class="settings-item">
+            <div>
+              <div class="settings-item-title">Тема оформления</div>
+              <div class="settings-item-desc">Светлая, тёмная или как в системе</div>
+            </div>
+            <div class="theme-switcher" id="themeSwitcher">
+              <button type="button" data-theme-value="light" onclick="setTheme('light')">☀ Светлая</button>
+              <button type="button" data-theme-value="dark" onclick="setTheme('dark')">🌙 Тёмная</button>
+              <button type="button" data-theme-value="system" onclick="setTheme('system')">💻 Система</button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3 class="settings-section-title">💾 Данные</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Экспорт данных</div><div class="settings-item-desc">Скачать все ваши данные в JSON</div></div><button class="btn-small" onclick="exportData()">Экспортировать</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Очистить кэш</div><div class="settings-item-desc">Удалить временные данные</div></div><button class="btn-small" onclick="if(confirm('Очистить кэш?'))alert('Кэш очищен')">Очистить</button></div>
+        </div>
+        <div class="settings-section danger-zone">
+          <h3 class="settings-section-title">⚠️ Опасная зона</h3>
+          <div class="settings-item"><div><div class="settings-item-title">Выйти из аккаунта</div><div class="settings-item-desc">Вы будете перенаправлены на страницу входа</div></div><button class="btn-small btn-danger" onclick="alert('Вы вышли (демо)')">Выйти</button></div>
+          <div class="settings-item"><div><div class="settings-item-title">Удалить аккаунт</div><div class="settings-item-desc">Это действие нельзя отменить</div></div><button class="btn-small btn-danger" onclick="if(confirm('Точно удалить аккаунт?'))alert('Аккаунт удалён (демо)')">Удалить аккаунт</button></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar-right">
+    <div class="sidebar-card">
+      <div class="profile-sidebar">
+        <div class="profile-sidebar-avatar">ДС</div>
+        <div><div class="profile-sidebar-name">Дмитрий С.</div><div class="profile-sidebar-role">✦ Студент · КИТиС</div></div>
+      </div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:12px">Пишу код, собираю команду и превращаю идеи в проекты.</div>
+      <a class="quick-link" href="../index.html#myprojects">📦 Мои активы</a>
+      <a class="quick-link" href="development.html?section=career">💼 Карьера и стажировки</a>
+      <a class="quick-link" href="help.html">🆘 Помощь и поддержка</a>
+    </div>
+    <div class="sidebar-card">
+      <div class="card-title" style="margin-bottom:12px">Хранилище</div>
+      <div style="margin-bottom:12px">
+        <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span style="color:var(--text-2)">Использовано</span><span style="font-weight:600;color:var(--text)" id="storageUsed">0 Б / 100 МБ</span></div>
+        <div class="storage-bar"><div class="storage-fill" id="storageFill" style="width:0%"></div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text-3)" id="storageFree">Доступно: 100 МБ</div>
+    </div>
+    <div class="sidebar-card">
+      <div class="card-title" style="margin-bottom:12px">Свои на связи</div>
+      <div class="chat-contact"><div class="chat-contact-avatar" style="background:var(--accent-soft);color:var(--accent-soft-text)">ДС</div><div><div class="chat-contact-name">Дмитрий С.</div><div class="chat-contact-role">Студент · КИТиС</div></div></div>
+      <div class="chat-contact"><div class="chat-contact-avatar" style="background:var(--purple-soft);color:var(--purple-text)">ПГ</div><div><div class="chat-contact-name">П. Глушнев</div><div class="chat-contact-role">Студент · КИТиС</div></div></div>
+      <div class="chat-contact"><div class="chat-contact-avatar" style="background:var(--blue-soft);color:var(--blue-text)">ЛГ</div><div><div class="chat-contact-name">Л. Галлахер</div><div class="chat-contact-role">Студент · БФУ</div></div></div>
+      <div class="chat-contact"><div class="chat-contact-avatar" style="background:var(--orange-soft);color:var(--orange-text)">АМ</div><div><div class="chat-contact-name">Анна М.</div><div class="chat-contact-role">Студент · КИТиС</div></div></div>
+    </div>
+    <div class="sidebar-card">
+      <div class="card-header"><span class="card-title-small">Встречаемся офлайн</span></div>
+      <div class="event-item"><div class="event-date"><span class="day">08</span><span class="month">окт</span></div><div><div class="event-title">Концерт трибьют-группы Oasis</div><div class="event-meta">18:00 · Студенческая гостиная</div></div></div>
+      <div class="event-item"><div class="event-date"><span class="day">12</span><span class="month">окт</span></div><div><div class="event-title">Открытый кодинг-клуб</div><div class="event-meta">17:30 · Аудитория 403</div></div></div>
+      <div class="event-item"><div class="event-date"><span class="day">15</span><span class="month">окт</span></div><div><div class="event-title">Встреча выпускников</div><div class="event-meta">19:00 · Актовый зал</div></div></div>
+      <div class="card-link" style="margin-top:8px" onclick="showDevelopmentNotice('Календарь в разработке')">Весь календарь ↗</div>
+    </div>
+    <div class="sidebar-card">
+      <div class="card-title" style="margin-bottom:12px">Что мне интересно</div>
+      <div class="interest-tags">
+        <button class="interest-tag">Веб-разработка</button><button class="interest-tag">Дизайн интерфейсов</button><button class="interest-tag">React</button><button class="interest-tag">TypeScript</button><button class="interest-tag">Хакатоны</button><button class="interest-tag">Чай и код</button>
+      </div>
+    </div>
+    <div class="sidebar-card">
+      <div class="card-title" style="margin-bottom:12px">Ачивки</div>
+      <div class="achievement-item"><div class="achievement-icon gold"><svg viewBox="0 0 24 24" fill="var(--orange-text)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div><div><div class="ach-title">Первый релиз</div><div class="ach-desc">Опубликовал свой первый проект</div></div></div>
+      <div class="achievement-item"><div class="achievement-icon purple"><svg viewBox="0 0 24 24" fill="var(--purple-text)"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div><div><div class="ach-title">На одной волне</div><div class="ach-desc">100 подписчиков в сообществе</div></div></div>
+    </div>
+    <div class="rules-card">
+      <div class="rules-title">Где уважуха — там и движуха</div>
+      <div class="rules-text">Уважай собеседников, проверяй источники и не бойся задавать вопросы.</div>
+      <div class="rules-link" onclick="openRulesModal()">Правила StudHub ↗</div>
+    </div>
+  </aside>
+</div>
+
+<!-- ================= МОДАЛКИ ================= -->
+<div class="modal-overlay" id="createProjectModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header"><h3>Создать проект</h3><button class="modal-close" onclick="closeCreateProjectModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Название проекта *</label><input type="text" class="form-input" id="projectName" placeholder="Например: StudHub"></div>
+      <div class="form-group"><label class="form-label">Описание *</label><textarea class="form-input" id="projectDesc" placeholder="Расскажите о вашем проекте..."></textarea></div>
+      <div class="form-group"><label class="form-label">Статус</label><select class="form-input" id="projectStatus"><option value="active">Активный</option><option value="draft">Черновик</option><option value="done">Завершён</option></select></div>
+      <div class="form-group"><label class="form-label">Теги</label><div style="display:flex;flex-wrap:wrap;gap:6px" id="tagSelector">
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'веб-разработка')">веб-разработка</button>
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'дизайн')">дизайн</button>
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'мобильное')">мобильное</button>
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'бот')">бот</button>
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'хакатон')">хакатон</button>
+        <button type="button" class="tag-select-btn" onclick="toggleTag(this,'учёба')">учёба</button>
+      </div></div>
+    </div>
+    <div class="modal-footer"><button class="btn-auth secondary" onclick="closeCreateProjectModal()">Отмена</button><button class="btn-auth" onclick="submitProject()">Создать проект</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="projectDetailModal" style="display:none">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-header"><h3>Проект</h3><button class="modal-close" onclick="closeProjectDetail()">✕</button></div>
+    <div class="modal-body" id="projectDetailBody"></div>
+    <div class="modal-footer"><button class="btn-auth secondary" onclick="closeProjectDetail()">Закрыть</button><button class="btn-auth" id="editProjectBtn">Редактировать</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="editProjectModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header"><h3>Редактировать проект</h3><button class="modal-close" onclick="closeEditProjectModal()">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="editProjectId">
+      <div class="form-group"><label class="form-label">Название проекта *</label><input type="text" class="form-input" id="editProjectName"></div>
+      <div class="form-group"><label class="form-label">Описание *</label><textarea class="form-input" id="editProjectDesc"></textarea></div>
+      <div class="form-group"><label class="form-label">Статус</label><select class="form-input" id="editProjectStatus"><option value="active">Активный</option><option value="draft">Черновик</option><option value="done">Завершён</option></select></div>
+    </div>
+    <div class="modal-footer"><button class="btn-auth danger" onclick="deleteCurrentProject()" style="margin-right:auto">Удалить</button><button class="btn-auth secondary" onclick="closeEditProjectModal()">Отмена</button><button class="btn-auth" onclick="saveEditedProject()">Сохранить</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="profileEditModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Редактировать профиль</h3>
+      <button class="modal-close" type="button" onclick="closeProfileEditModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="profileEditForm" onsubmit="saveProfileChanges(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="editProfileName">Имя *</label>
+          <input class="form-input" id="editProfileName" type="text" placeholder="Дмитрий Смирнов" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editProfileEmail">Email *</label>
+          <input class="form-input" id="editProfileEmail" type="email" placeholder="student@kitis.ru" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editProfileCampus">Кампус *</label>
+          <select class="form-input" id="editProfileCampus">
+            <option value="kitis">КИТиС — Калининград</option>
+            <option value="bfu">БФУ им. Канта</option>
+            <option value="other">Другое</option>
+          </select>
+        </div>
+        <div class="section-divider">🔒 Смена пароля</div>
+        <div class="password-hint">Оставь поля пустыми, если не хочешь менять пароль.</div>
+        <div class="form-group">
+          <label class="form-label" for="editCurrentPassword">Текущий пароль</label>
+          <input class="form-input" id="editCurrentPassword" type="password" placeholder="Введи текущий пароль" autocomplete="current-password">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editNewPassword">Новый пароль</label>
+          <input class="form-input" id="editNewPassword" type="password" placeholder="Минимум 8 символов" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="editNewPasswordConfirm">Повторите новый пароль</label>
+          <input class="form-input" id="editNewPasswordConfirm" type="password" placeholder="Повтори новый пароль" autocomplete="new-password">
+        </div>
+        <div class="error-message" id="profileEditError" style="display:none"></div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-auth secondary" type="button" onclick="closeProfileEditModal()">Отмена</button>
+      <button class="btn-auth" type="submit" form="profileEditForm">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="uploadModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Загрузить файлы</h3>
+      <button class="modal-close" type="button" onclick="closeUploadModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="upload-dropzone" id="uploadDropzone">
+        <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+        <div class="upload-title">Перетащи файлы сюда</div>
+        <div class="upload-sub">или нажми, чтобы выбрать с устройства</div>
+        <input type="file" id="fileInput" multiple style="display:none">
+      </div>
+      <div class="upload-queue" id="uploadQueue"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-auth secondary" type="button" onclick="closeUploadModal()">Отмена</button>
+      <button class="btn-auth" type="button" id="uploadSubmitBtn" onclick="uploadPendingFiles()">Загрузить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="createPostModal" style="display:none">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Создать пост</h3>
+      <button class="modal-close" type="button" onclick="closeCreatePostModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="createPostForm" onsubmit="submitPost(event)" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="postTitle">Заголовок *</label>
+          <input class="form-input" id="postTitle" type="text" placeholder="Например: Собрал прототип StudHub">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postText">Текст поста</label>
+          <textarea class="form-input" id="postText" placeholder="Расскажи, что сделал, какие идеи, какие файлы прикрепляешь..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="postTags">Теги</label>
+          <input class="form-input" id="postTags" type="text" placeholder="веб-разработка, дизайн, хакатон">
+          <div style="font-size:12px;color:var(--text-3);margin-top:6px">
+            Разделяй теги запятой. Например: <b>учёба, конспекты, КИТиС</b>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Файлы</label>
+          <div class="upload-dropzone" id="postDropzone">
+            <svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+            <div class="upload-title">Перетащи файлы сюда</div>
+            <div class="upload-sub">или нажми, чтобы выбрать с устройства</div>
+            <input type="file" id="postFileInput" multiple style="display:none">
+          </div>
+          <div class="upload-queue" id="postQueue"></div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-auth secondary" type="button" onclick="closeCreatePostModal()">Отмена</button>
+      <button class="btn-auth" type="submit" form="createPostForm" id="publishPostBtn">Опубликовать пост</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= МОДАЛКА ПРАВИЛ ================= -->
+<div class="modal-overlay" id="rulesModal" style="display:none">
+  <div class="modal rules-modal">
+    <div class="modal-header">
+      <h3>📜 Правила StudHub</h3>
+      <button class="modal-close" type="button" onclick="closeRulesModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="rules-intro">
+        <b>Добро пожаловать!</b> Наше пространство создано для комфортного, безопасного и интересного общения. Пожалуйста, ознакомьтесь с правилами поведения, которые обязательны для всех участников.
+      </div>
+
+      <div class="rules-section">
+        <div class="rules-section-title">
+          <div class="rules-section-icon">🤝</div>
+          1. Взаимное уважение
+        </div>
+        <ul class="rules-list">
+          <li><b>Будьте вежливы.</b> Относитесь к другим так, как хотите, чтобы относились к вам. Уважительное общение — основа нашего комьюнити.</li>
+          <li><b>Запрещены оскорбления и травля.</b> Любые формы личных оскорблений, агрессии, токсичного поведения, «перехода на личности» и кибербуллинга недопустимы.</li>
+          <li><b>Запрещён язык вражды.</b> Любые дискриминационные высказывания по признаку расы, пола, ориентации, религии, возраста или национальности приведут к немедленной блокировке.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <div class="rules-section-title">
+          <div class="rules-section-icon blue">🧹</div>
+          2. Чистота общения <span class="rule-tag" style="margin-left:8px">Нет спаму</span>
+        </div>
+        <ul class="rules-list">
+          <li><b>Пишите по теме</b> <span class="rule-tag">Флуд и Офтоп</span> Старайтесь придерживаться тематики каналов или комнат. Для свободного общения используйте специально созданную флудилку.</li>
+          <li><b>Запрещён спам и реклама.</b> Не публикуйте ссылки на сторонние ресурсы, коммерческие предложения, реферальные ссылки и рекламу без предварительного согласования с модераторами.</li>
+          <li><b>Капслок и чрезмерные теги.</b> Не злоупотребляйте ПИСЬМОМ ЗАГЛАВНЫМИ БУКВАМИ, бессмысленным набором символов и частым упоминанием пользователей или администрации (<b>@everyone</b>, <b>@here</b>) без реальной необходимости.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <div class="rules-section-title">
+          <div class="rules-section-icon purple">🛡</div>
+          3. Безопасность и конфиденциальность
+        </div>
+        <ul class="rules-list">
+          <li><b>Защита личных данных</b> <span class="rule-tag">Доксинг</span> Запрещено публиковать чужую личную информацию (номера телефонов, адреса, личные фото, переписки) без явного согласия этого человека.</li>
+          <li><b>Запрещён опасный контент.</b> Запрещена публикация материалов 18+ (NSFW), призывов к насилию, незаконным действиям и любого вредоносного ПО.</li>
+        </ul>
+      </div>
+
+      <div class="rules-section">
+        <div class="rules-section-title">
+          <div class="rules-section-icon orange">⚖️</div>
+          4. Модерация и администрирование
+        </div>
+        <ul class="rules-list">
+          <li><b>Решения модераторов.</b> Модераторы следят за порядком. Их требования об изменении тона общения или прекращении спора обязательны к исполнению.</li>
+          <li><b>Обжалование.</b> Если вы не согласны с действиями модератора, напишите ему или администратору в личные сообщения. Публичное обсуждение и критика действий администрации в общих чатах запрещены.</li>
+        </ul>
+      </div>
+
+      <div class="punishments-block">
+        <div class="punishments-title">🚫 Система наказаний</div>
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:10px;line-height:1.6">
+          За нарушение правил модераторы могут применить следующие меры (в зависимости от тяжести):
+        </div>
+        <ol class="punishments-list">
+          <li><b>Предупреждение</b> (устное или системное)</li>
+          <li><b>Мут</b> (ограничение права отправлять сообщения от 1 часа до нескольких дней)</li>
+          <li><b>Бан</b> (полное удаление из сообщества без права возврата)</li>
+        </ol>
+      </div>
+
+      <div class="rules-footer-note">
+        Оставаясь в StudHub, ты подтверждаешь, что ознакомился с правилами и согласен их соблюдать.<br>
+        <b>Где уважуха — там и движуха.</b>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-auth secondary" type="button" onclick="closeRulesModal()">Закрыть</button>
+      <button class="btn-auth" type="button" onclick="acceptRules()">Я согласен с правилами</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/app.js"></script>
+
+<nav class="mobile-bottom-nav" aria-label="Основная навигация">
+  <a href="../index.html"><span class="mobile-nav-icon">⌂</span><span>Главная</span></a>
+  <a href="../pages/projects.html"><span class="mobile-nav-icon">▤</span><span>Проекты</span></a>
+  <a href="../pages/communities.html"><span class="mobile-nav-icon">◎</span><span>Сообщества</span></a>
+  <button type="button" onclick="openWallet()" aria-label="Открыть кошелёк"><span class="mobile-nav-icon">₽</span><span>Кошелёк</span></button>
+  <a href="../pages/profile.html"><span class="mobile-nav-icon">♙</span><span>Профиль</span></a>
+</nav>
+
+</body>
+</html>
