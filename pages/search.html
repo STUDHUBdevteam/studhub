@@ -74,74 +74,7 @@
     </div>
   </aside>
 
-  <main class="main-content"><section class="search-results-page"><div class="breadcrumb">StudHub / Поиск</div><h1 class="page-title">Поиск по StudHub</h1><p class="search-page-intro">Ищи проекты, сообщества, материалы и разделы сайта в одном месте.</p><form class="search-page-form" onsubmit="event.preventDefault();renderGlobalSearchResults()"><input id="searchPageInput" type="search" placeholder="Например: код, КИТиС, расписание…" aria-label="Поисковый запрос"><button type="submit">Найти</button></form><div class="search-result-meta" id="searchResultMeta">Введите запрос, чтобы начать поиск</div><div class="search-results-list" id="searchResults"></div></section>    <div class="section" id="sec-help">
-      <div class="breadcrumb">&gt;&gt; Помощь</div>
-      <div class="page-header-row">
-        <h1 class="page-title">Помощь</h1>
-        <button class="btn-create" onclick="showDevelopmentNotice('Личный чат с поддержкой в разработке')" style="font-size:13px;padding:8px 16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm1.07-5.75l-.92.97C12.43 9.95 12 10.53 12 11.5c0 .28.02.5.05.78h1.87c-.03-.28-.05-.5-.05-.78 0-.47.17-.78.48-1.1l.68-.72c.42-.44.69-1.03.69-1.65 0-1.4-1.18-2.5-2.72-2.5-1.48 0-2.73 1.05-2.73 2.5h2c0-.28.12-.5.32-.68z"/></svg>Написать в поддержку</button>
-      </div>
-      <div class="settings-container">
-        <div class="settings-section">
-          <h3 class="settings-section-title">🚀 Быстрый старт</h3>
-          <div class="help-steps">
-            <div class="help-step"><span class="help-step-num">1</span><div><div class="help-step-title">Заведи профиль</div><div class="help-step-desc">Заполни имя, кампус и направление — так тебя найдут будущие сокомандники.</div></div></div>
-            <div class="help-step"><span class="help-step-num">2</span><div><div class="help-step-title">Создай проект</div><div class="help-step-desc">Нажми «Создать проект» во вкладке «Проекты»: название, описание, теги и статус.</div></div></div>
-            <div class="help-step"><span class="help-step-num">3</span><div><div class="help-step-title">Собери команду</div><div class="help-step-desc">Расскажи о проекте в сообществе КИТиС или найди единомышленников через поиск.</div></div></div>
-            <div class="help-step"><span class="help-step-num">4</span><div><div class="help-step-title">Храни материалы в «Мои активы»</div><div class="help-step-desc">В разделе «Мои активы» собирай свои проекты и прикреплённые к ним файлы: документы, макеты и архивы.</div></div></div>
-          </div>
-        </div>
-        <div class="settings-section">
-          <h3 class="settings-section-title">📖 Как пользоваться StudHub</h3>
-          <p class="guide-intro">Две короткие инструкции: одна — для тех, кто поддерживает идеи, вторая — для тех, кто их запускает.</p>
-          <div class="guide-card guide-backer">
-            <div class="guide-card-head"><span class="guide-badge badge-green">Для бекеров</span><h4>Как поддержать крутую идею за 3 минуты</h4><p>Ты нашел проект, который тебе откликается? Отлично! Вот как сделать так, чтобы автор получил поддержку, а ты был спокоен за свои деньги.</p></div>
-            <ol class="guide-steps">
-              <li><b>Шаг 1. Изучи проект.</b> Зайди на страницу проекта. Прочитай, какую проблему решает автор, что уже сделано и на что нужны средства. Не стесняйся задать вопрос в разделе обсуждений — авторы любят живую обратную связь!</li>
-              <li><b>Шаг 2. Нажми кнопку «Поддержать».</b> Она обычно яркая (нашего фирменного фисташкового цвета 😉).</li>
-              <li><b>Шаг 3. Выбери сумму и оставь послание (по желанию).</b> Ты можешь поддержать любой суммой. Даже 100 рублей помогают проекту подняться в рекомендациях. Оставь короткий комментарий: «Удачи!» или «Жду релиз, крутая идея». Это сильно мотивирует авторов.</li>
-              <li><b>Шаг 4. Безопасная оплата.</b> Перейди к оплате. Мы используем защищённые шлюзы, так что твои данные в безопасности.</li>
-              <li><b>Шаг 5. Оставайся на связи.</b> После поддержки ты автоматически попадаешь в круг доверия проекта. Автор сможет писать тебе обновления о прогрессе прямо во встроенном мессенджере StudHub.</li>
-            </ol>
-            <div class="guide-tip">💡 <b>Лайфхак:</b> если проект тебе очень понравился, но сейчас нет возможности задонатить — просто нажми кнопку «Поделиться» и скинь ссылку в чат одногруппникам. Сарафанное радио работает лучше любой рекламы!</div>
-          </div>
-          <div class="guide-card guide-author">
-            <div class="guide-card-head"><span class="guide-badge badge-purple">Для авторов</span><h4>Как запустить проект или найти ему нового хозяина</h4><p>У тебя есть идея, прототип или недоделанный код, который пылится на диске? Не удаляй его. Дай ему второй шанс на StudHub.</p></div>
-            <ol class="guide-steps">
-              <li><b>Шаг 1. Быстрая регистрация.</b> Создай аккаунт. Заполни профиль: добавь аватарку, напиши пару слов о себе и укажи свой вуз/факультет. Это повысит доверие к тебе.</li>
-              <li><b>Шаг 2. Выбери тип публикации.</b> У нас два пути, выбери свой:<br>🆕 <b>Краудфандинг</b> — ты запускаешь новый проект с нуля и ищешь поддержку (деньгами, советами или командой).<br>🔄 <b>Маркетплейс незавершённых проектов</b> — ты продаёшь или передаёшь свой заброшенный код, дизайн или исследование тому, кто готов его доделать.</li>
-              <li><b>Шаг 3. Заполни карточку проекта.</b> Не нужно писать диссертацию. Отвечай честно и по делу:<br>1. <b>Название и суть:</b> что это и какую проблему решает? (1–2 предложения).<br>2. <b>Что уже сделано:</b> скриншоты, ссылка на GitHub/Figma, краткое описание текущего статуса.<br>3. <b>Чего не хватает:</b> денег на хостинг? дизайнера? тестировщика? Честно укажи цель.<br>4. <b>Медиа:</b> добавь 1–2 картинки или короткое видео. Проекты с визуалом собирают на 70% больше поддержки.</li>
-              <li><b>Шаг 4. Публикация и первый толчок.</b> Нажми «Опубликовать». Платформа сгенерирует тебе красивую ссылку. Важно: платформа дает инструмент, но первую волну поддержки (30% от цели) обычно приводят друзья, одногруппники и подписчики автора. Скинь ссылку в свои чаты!</li>
-              <li><b>Шаг 5. Общайся во встроенном мессенджере.</b> Когда к тебе постучатся потенциальные соавторы или покупатели, не уводи их в Telegram. Общайтесь и обменивайтесь файлами прямо в StudHub — это безопасно, и все договорённости сохраняются в истории проекта.</li>
-            </ol>
-            <div class="guide-tip">💡 <b>Лайфхак:</b> если ты продаёшь недоделанный проект, укажи в описании: «Идеально подойдет для портфолио или как база для дипломной работы». Это сразу бьет в цель твоей аудитории.</div>
-          </div>
-        </div>
-        <div class="settings-section">
-          <h3 class="settings-section-title">❓ Частые вопросы</h3>
-          <div class="faq-list" id="faqList"></div>
-        </div>
-        <div class="settings-section">
-          <h3 class="settings-section-title">🧭 Разделы StudHub</h3>
-          <div class="settings-item"><div><div class="settings-item-title">Проекты</div><div class="settings-item-desc">Все студенческие проекты колледжа: активные, черновики и завершённые.</div></div><a class="btn-small" href="projects.html" data-help-link="projects">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Мои активы</div><div class="settings-item-desc">Именно твои проекты и прикреплённые к ним файлы и материалы.</div></div><a class="btn-small" href="assets.html" data-help-link="assets">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Сообщества</div><div class="settings-item-desc">КИТиС, «Кодим вместе» и другие студенческие сообщества.</div></div><a class="btn-small" href="communities.html" data-help-link="communities">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Подписки</div><div class="settings-item-desc">Люди и сообщества, на которых ты подписан.</div></div><a class="btn-small" href="subscriptions.html" data-help-link="subscriptions">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Мой профиль</div><div class="settings-item-desc">Публикации, проекты и сохранённое — всё на одной странице.</div></div><a class="btn-small" href="profile.html" data-help-link="profile">Открыть</a></div>
-          <div class="settings-item"><div><div class="settings-item-title">Настройки</div><div class="settings-item-desc">Аккаунт, безопасность, уведомления и тема оформления.</div></div><a class="btn-small" href="settings.html" data-help-link="settings">Открыть</a></div>
-        </div>
-        <div class="settings-section">
-          <h3 class="settings-section-title">💬 Связаться с нами</h3>
-          <div class="settings-item"><div><div class="settings-item-title">Email поддержки</div><div class="settings-item-desc">support@studhub.ru — отвечаем в течение дня</div></div><button class="btn-small" onclick="alert('Скопировано: support@studhub.ru')">Скопировать</button></div>
-          <div class="settings-item"><div><div class="settings-item-title">Сообщество «Помощь StudHub»</div><div class="settings-item-desc">Задай вопрос — студенты и команда ответят быстрее</div></div><button class="btn-small" onclick="showDevelopmentNotice('Раздел \'Помощь StudHub\' в разработке')">Перейти</button></div>
-          <div class="settings-item"><div><div class="settings-item-title">Нашёл ошибку? Сообщи нам</div><div class="settings-item-desc">Опиши, что случилось — починим и не забудем поблагодарить 🎁</div></div><button class="btn-small" onclick="openHelpTicketModal()">Написать</button></div>
-        </div>
-        <div class="settings-section">
-          <h3 class="settings-section-title">⚖️ Правила и конфиденциальность</h3>
-          <div class="settings-item"><div><div class="settings-item-title">Правила StudHub</div><div class="settings-item-desc">Где уважуха — там и движуха</div></div><button class="btn-small" onclick="openRulesModal()">Читать</button></div>
-          <div class="settings-item"><div><div class="settings-item-title">Конфиденциальность</div><div class="settings-item-desc">Как мы храним твои данные</div></div><button class="btn-small" onclick="showDevelopmentNotice('Раздел \'Конфиденциальность\' в разработке')">Читать</button></div>
-        </div>
-      </div>
-    </div>
+  <main class="main-content"><section class="search-results-page"><div class="breadcrumb">StudHub / Поиск</div><h1 class="page-title">Поиск по StudHub</h1><p class="search-page-intro">Ищи проекты, сообщества, материалы и разделы сайта в одном месте.</p><form class="search-page-form" onsubmit="event.preventDefault();renderGlobalSearchResults()"><input id="searchPageInput" type="search" placeholder="Например: код, КИТиС, расписание…" aria-label="Поисковый запрос"><button type="submit">Найти</button></form><div class="search-result-meta" id="searchResultMeta">Введите запрос, чтобы начать поиск</div><div class="search-results-list" id="searchResults"></div></section>    
 
   </main>
 
