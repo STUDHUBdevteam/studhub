@@ -1452,10 +1452,11 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(document.getElementById('assetUploadInput')||document.getElementById('assetsContainer'))setupUploadDropzone();
   if(document.getElementById('assetsContainer'))renderAssets('all');
   renderHelpGuides();
-  // Раскрытие раздела по хешу (#myprojects — «Мои активы», #help — «Помощь»)
+  // Старые ссылки вида index.html#myprojects / #help → на нужные страницы
   (function(){
     const h=(location.hash||'').replace('#','');
-    if(h && document.getElementById('sec-'+h)) showSection(h);
+    if(h==='myprojects'){ location.replace('pages/assets.html'); }
+    else if(h==='help'){ location.replace('pages/help.html'); }
   })();
 
   const searchPageInput=document.getElementById('searchPageInput');
