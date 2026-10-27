@@ -119,6 +119,7 @@ function renderProjects(filter='all'){
     if(el2)el2.textContent=counts[key];
   });
   const npc=document.getElementById('navProjectsCount');if(npc)npc.textContent=all.length;
+  renderMyProjects();
   const ppc=document.getElementById('profileProjectsCount');if(ppc)ppc.textContent=all.length;
   const ptc=document.getElementById('profileProjTabCount');if(ptc)ptc.textContent=all.length;
 }
@@ -127,6 +128,37 @@ function filterByTab(filter,btn){
   row.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
   btn.classList.add('active');
   renderProjects(filter);
+}
+
+function isMyProject(p){
+  try{
+    if(typeof getPostAuthor==='function'){
+      const me=(getPostAuthor().name||'').trim();
+      if(me && p.author===me)return true;
+    }
+  }catch(e){}
+  return p.author==='Дмитрий С.' || p.isMine===true;
+}
+let myProjectsFilter='all';
+function renderMyProjects(){
+  const c=document.getElementById('myProjectsContainer');
+  if(!c)return;
+  let mine=getProjects().filter(isMyProject);
+  if(myProjectsFilter==='active')mine=mine.filter(p=>p.status==='active');
+  else if(myProjectsFilter==='draft')mine=mine.filter(p=>p.status==='draft');
+  else if(myProjectsFilter==='done')mine=mine.filter(p=>p.status==='done');
+  mine.sort((a,b)=>b.createdAt-a.createdAt);
+  c.innerHTML = mine.length ? mine.map(projectCardHTML).join('') :
+    `<div class="empty-projects"><svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><h3>Ваших проектов пока нет</h3><p>Создайте первый проект — он появится здесь!</p></div>`;
+  const mac=document.getElementById('navMyProjectsCount');
+  if(mac)mac.textContent=getProjects().filter(isMyProject).length;
+}
+function filterMyProjectsByTab(filter,btn){
+  myProjectsFilter=filter;
+  const row=btn.closest('.tabs-row');
+  row.querySelectorAll('.tab-btn').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderMyProjects();
 }
 function openProjectDetail(id){
   const projects=getProjects();const project=projects.find(p=>p.id===id);if(!project)return;
@@ -666,9 +698,9 @@ function openGlobalSearch(){
 }
 const studHubSearchPages=[
  {title:'Главная',type:'Раздел',url:'../index.html',text:'лента студенты колледж КИТиС новости цитата дня'},
- {title:'Мои проекты',type:'Раздел',url:'projects.html',text:'проекты создание команды разработка дизайн хакатон'},
+ {title:'Проекты',type:'Раздел',url:'projects.html',text:'проекты все сообщество создание команды разработка дизайн хакатон'},
  {title:'Сообщества',type:'Раздел',url:'communities.html',text:'сообщества КИТиС общага кодим вместе студенты общение'},
- {title:'Мои активы',type:'Раздел',url:'assets.html',text:'активы файлы документы загрузка материалы'},
+ {title:'Мои проекты',type:'Раздел',url:'assets.html',text:'мои проекты участие авторство файлы документы загрузка материалы'},
  {title:'Подписки',type:'Раздел',url:'subscriptions.html',text:'подписки карьера стажировки'},
  {title:'Мой профиль',type:'Раздел',url:'profile.html',text:'профиль имя аккаунт студент'},
  {title:'Настройки',type:'Раздел',url:'settings.html',text:'настройки тема безопасность уведомления'},
